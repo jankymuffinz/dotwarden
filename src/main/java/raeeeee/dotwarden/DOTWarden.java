@@ -1,4 +1,4 @@
-package io.github.Tors_0.dotwarden;
+package raeeeee.dotwarden;
 
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;

@@ -1,6 +1,6 @@
-package io.github.Tors_0.dotwarden.mixin;
+package raeeeee.dotwarden.mixin;
 
-import io.github.Tors_0.dotwarden.DOTWarden;
+import raeeeee.dotwarden.DOTWarden;
 import net.minecraft.client.gui.screen.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
