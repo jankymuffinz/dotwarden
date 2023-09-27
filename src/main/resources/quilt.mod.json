@@ -17,7 +17,7 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "io.github.Tors-0.dotwarden.DOTWarden"
+			"init": "raeeeee.dotwarden.DOTWarden"
 		},
 		"depends": [
 			{

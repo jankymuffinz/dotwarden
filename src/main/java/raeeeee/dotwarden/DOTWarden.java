@@ -4,6 +4,7 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import raeeeee.dotwarden.registry.ModItems;
 
 public class DOTWarden implements ModInitializer {
 	public static final String ID = "dotwarden";
@@ -14,6 +15,8 @@ public class DOTWarden implements ModInitializer {
 
 	@Override
 	public void onInitialize(ModContainer mod) {
-		LOGGER.info("Hello Quilt world from {}!", mod.metadata().name());
+		LOGGER.info("Now initializing {} version {}", mod.metadata().name(), mod.metadata().version());
+
+		ModItems.init();
 	}
 }
