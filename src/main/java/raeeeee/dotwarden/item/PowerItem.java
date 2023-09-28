@@ -29,38 +29,47 @@ public class PowerItem extends Item {
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (!world.isClient()) {
-			if (user.getInventory().contains(new ItemStack(Items.SCULK))) {
-					user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
-						user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") +
-						user.getInventory().remove(SCULK_ITEM,ptsUntilNextLevel(user,hand),user.getInventory()));
-					while (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") >= ptsUntilNextLevel(user,hand)) {
-						user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
-							user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") -
-							ptsUntilNextLevel(user,hand));
-						user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevel",
-							user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel") + 1);
-					}
-					return TypedActionResult.success(user.getStackInHand(hand),true);
-			} else {
-				return TypedActionResult.pass(user.getStackInHand(hand));
-			}
+            if (user.getInventory().contains(new ItemStack(Items.SCULK))) {
+                if (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") == 0) {
+                    user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
+                            user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") +
+                                    user.getInventory().remove(SCULK_ITEM, ptsUntilNextLevel(user, hand), user.getInventory()));
+                } else {
+                    user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
+                            user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") +
+                                    user.getInventory().remove(SCULK_ITEM, ptsUntilNextLevel(user, hand) -
+                                                    user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power"),
+                                            user.getInventory()));
+                }
+                while (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") >= ptsUntilNextLevel(user,hand)) {
+                    user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
+                            user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") -
+                                    ptsUntilNextLevel(user,hand));
+                    user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevel",
+                            user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel") + 1);
+                }
+                return TypedActionResult.success(user.getStackInHand(hand),true);
+            } else {
+                return TypedActionResult.pass(user.getStackInHand(hand));
+            }
 		}
 		return super.use(world, user, hand);
 	}
 	private int ptsUntilNextLevel(PlayerEntity user, Hand hand) {
 		int level = user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel");
 		if (level >= 30) {
-			return 112 + (level - 30) * 9;
+			return (112 + (level - 30) * 9);
 		} else {
-			return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
+			return level >= 15 ? 37 + (level - 15) * 5 : (7 + level * 2);
 		}
 	}
 	private int ptsUntilNextLevel(ItemStack stack) {
 		int level = stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel");
 		if (level >= 30) {
-			return 112 + (level - 30) * 9;
+			return (112 + (level - 30) * 9) - stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power");
 		} else {
-			return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
+			return level >= 15 ? (37 + (level - 15) * 5) - stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel") :
+                    (7 + level * 2) - stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel");
 		}
 	}
 	@Override
