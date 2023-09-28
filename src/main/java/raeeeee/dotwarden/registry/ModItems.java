@@ -17,7 +17,7 @@ public interface ModItems {
 	// Item NAME = createItem("name", new ModItem(new QuiltItemSettings()));
 
 	Item POWER_OF_THE_DISCIPLE = createItem("power_of_the_disciple", new PowerItem(
-		new QuiltItemSettings().maxCount(1).group(ItemGroup.TOOLS), 10_000));
+		new QuiltItemSettings().maxCount(1).group(ItemGroup.TOOLS)));
 
 	private static <T extends Item> T createItem(String name, T item) {
 		ITEMS.put(item, new Identifier(DOTWarden.ID, name));

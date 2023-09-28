@@ -5,10 +5,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.tag.TagKey;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -18,45 +17,61 @@ import raeeeee.dotwarden.DOTWarden;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class PowerItem extends Item {
-	private static final Predicate<ItemStack> VALID_ITEM = new Predicate<ItemStack>() {
-		@Override
-		public boolean test(ItemStack itemStack) {
-			return (itemStack.isOf(Items.SCULK));
-		}
-	};
-	private final int size;
-	private int contents = 0;
-	private boolean full = false;
+import static net.minecraft.text.Style.EMPTY;
 
-	public PowerItem(Settings settings, int size) {
+public class PowerItem extends Item {
+	private static final Predicate<ItemStack> SCULK_ITEM = itemStack -> (itemStack.isOf(Items.SCULK));
+
+	public PowerItem(Settings settings) {
 		super(settings);
-		this.size = size;
 	}
 
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (!world.isClient()) {
 			if (user.getInventory().contains(new ItemStack(Items.SCULK))) {
-				if (this.contents < this.size) {
-					int sculkCount = user.getInventory().count(Items.SCULK);
-					if (sculkCount > (this.size-this.contents)) {
-						user.getInventory().remove(VALID_ITEM, sculkCount, user.getInventory());
-						this.contents += sculkCount;
-						return TypedActionResult.success(user.getStackInHand(hand));
+					user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
+						user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") +
+						user.getInventory().remove(SCULK_ITEM,ptsUntilNextLevel(user,hand),user.getInventory()));
+					while (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") >= ptsUntilNextLevel(user,hand)) {
+						user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
+							user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") -
+							ptsUntilNextLevel(user,hand));
+						user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevel",
+							user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel") + 1);
 					}
-				}
+					return TypedActionResult.success(user.getStackInHand(hand),true);
 			} else {
-				return TypedActionResult.fail(user.getStackInHand(hand));
+				return TypedActionResult.pass(user.getStackInHand(hand));
 			}
 		}
 		return super.use(world, user, hand);
 	}
-
+	private int ptsUntilNextLevel(PlayerEntity user, Hand hand) {
+		int level = user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel");
+		if (level >= 30) {
+			return 112 + (level - 30) * 9;
+		} else {
+			return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
+		}
+	}
+	private int ptsUntilNextLevel(ItemStack stack) {
+		int level = stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel");
+		if (level >= 30) {
+			return 112 + (level - 30) * 9;
+		} else {
+			return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
+		}
+	}
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		tooltip.add(Text.translatable("item.dotwarden.power_of_the_disciple.tooltip"));
-		tooltip.add(Text.literal("" + this.contents + "/" + this.size));
+		Style style = EMPTY.withColor(Formatting.DARK_AQUA);
+		Text tip1 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip");
+		Text tip2 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip1");
+		tooltip.add(Text.literal("").append(tip1).append(": " + stack.getOrCreateSubNbt(DOTWarden.ID)
+			.getInt("powerlevel")).setStyle(style));
+		tooltip.add(Text.literal("").append(tip2).append(": " + (int)(stack.getOrCreateSubNbt(DOTWarden.ID)
+			.getInt("power") / (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.DARK_GRAY)));
 		super.appendTooltip(stack, world, tooltip, context);
 	}
 }
