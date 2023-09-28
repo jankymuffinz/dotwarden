@@ -20,7 +20,8 @@ public interface ModItems {
 
 	Item POWER_OF_THE_DISCIPLE = createItem("power_of_the_disciple", new PowerItem(
 		new QuiltItemSettings().maxCount(1).group(ItemGroup.TOOLS).rarity(Rarity.EPIC)));
-    Item SCULKED_KNIFE = createItem("sculked_knife", new SculkedKnifeItem(new QuiltItemSettings().maxCount(1).group(ItemGroup.COMBAT).rarity(Rarity.RARE)));
+    Item SCULKED_KNIFE = createItem("sculked_knife", new SculkedKnifeItem(new QuiltItemSettings().maxCount(1)
+            .group(ItemGroup.COMBAT).rarity(Rarity.RARE).maxDamage(50)));
 
 	private static <T extends Item> T createItem(String name, T item) {
 		ITEMS.put(item, new Identifier(DOTWarden.ID, name));

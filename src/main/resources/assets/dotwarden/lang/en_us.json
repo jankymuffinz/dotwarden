@@ -1,5 +1,7 @@
 {
   "item.dotwarden.power_of_the_disciple": "Power of the Disciple",
   "item.dotwarden.power_of_the_disciple.tooltip": "Power",
-  "item.dotwarden.power_of_the_disciple.tooltip1": "Progress"
+  "item.dotwarden.power_of_the_disciple.tooltip1": "Progress",
+  "item.dotwarden.sculked_knife": "Sculked Dagger",
+  "item.dotwarden.sculked_knife.tooltip": "Draws from Power of the Disciple"
 }

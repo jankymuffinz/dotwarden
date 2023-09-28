@@ -33,23 +33,30 @@ public class PowerItem extends Item {
                 if (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") == 0) {
                     user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
                             user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") +
-                                    user.getInventory().remove(SCULK_ITEM, ptsUntilNextLevel(user, hand), user.getInventory()));
+                                    user.getInventory().remove(SCULK_ITEM, ptsUntilNextLevel(user.getStackInHand(hand)), user.getInventory()));
                 } else {
                     user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
                             user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") +
-                                    user.getInventory().remove(SCULK_ITEM, ptsUntilNextLevel(user, hand) -
+                                    user.getInventory().remove(SCULK_ITEM, ptsUntilNextLevel(user.getStackInHand(hand)) -
                                                     user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power"),
                                             user.getInventory()));
                 }
-                while (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") >= ptsUntilNextLevel(user,hand)) {
+                while (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") >= ptsUntilNextLevel(user.getStackInHand(hand))) {
                     user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
                             user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") -
-                                    ptsUntilNextLevel(user,hand));
+                                    ptsUntilNextLevel(user.getStackInHand(hand)));
                     user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevel",
                             user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel") + 1);
                 }
                 return TypedActionResult.success(user.getStackInHand(hand),true);
             } else {
+                while (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") >= ptsUntilNextLevel(user.getStackInHand(hand))) {
+                    user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
+                            user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") -
+                                    ptsUntilNextLevel(user.getStackInHand(hand)));
+                    user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevel",
+                            user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel") + 1);
+                }
                 return TypedActionResult.pass(user.getStackInHand(hand));
             }
 		}
@@ -63,7 +70,7 @@ public class PowerItem extends Item {
 			return level >= 15 ? 37 + (level - 15) * 5 : (7 + level * 2);
 		}
 	}
-	private int ptsUntilNextLevel(ItemStack stack) {
+	public static int ptsUntilNextLevel(ItemStack stack) {
 		int level = stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevel");
 		if (level >= 30) {
 			return (112 + (level - 30) * 9) - stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power");
@@ -80,7 +87,7 @@ public class PowerItem extends Item {
 		tooltip.add(Text.literal("").append(tip1).append(": " + stack.getOrCreateSubNbt(DOTWarden.ID)
 			.getInt("powerlevel")).setStyle(style));
 		tooltip.add(Text.literal("").append(tip2).append(": " + (int)(stack.getOrCreateSubNbt(DOTWarden.ID)
-			.getInt("power") / (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.DARK_GRAY)));
+			.getInt("power") / (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.GRAY)));
 		super.appendTooltip(stack, world, tooltip, context);
 	}
 }
