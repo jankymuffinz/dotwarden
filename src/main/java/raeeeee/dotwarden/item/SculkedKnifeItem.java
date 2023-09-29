@@ -14,12 +14,11 @@ import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import raeeeee.dotwarden.DOTWarden;
+import raeeeee.dotwarden.extensions.PlayerExtensions;
 import raeeeee.dotwarden.registry.ModItems;
 
 import java.util.List;
 import java.util.function.Predicate;
-
-import static raeeeee.dotwarden.item.PowerItem.ptsUntilNextLevel;
 
 public class SculkedKnifeItem extends Item {
     private static final Predicate<ItemStack> POWER_SOURCE = itemStack -> (itemStack.isOf(ModItems.POWER_OF_THE_DISCIPLE));
@@ -29,18 +28,8 @@ public class SculkedKnifeItem extends Item {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof PlayerEntity player) {
-            NbtCompound powerPouch = player.getInventory().getStack(findPower(player)).getOrCreateSubNbt(DOTWarden.ID);
-            if (player.getInventory().contains(new ItemStack(ModItems.POWER_OF_THE_DISCIPLE)) &&
-                    powerPouch.getInt("powerlevel") > 0) {
-                powerPouch.putInt("powerlevel", powerPouch.getInt("powerlevel") - 1);
-                while (powerPouch.getInt("power") >= ptsUntilNextLevel(player.getInventory().getStack(findPower(player)))) {
-                    powerPouch.putInt("power",
-                            powerPouch.getInt("power") -
-                                    ptsUntilNextLevel(player.getInventory().getStack(findPower(player))));
-                    powerPouch.putInt("powerlevel",
-                            powerPouch.getInt("powerlevel") + 1);
-                }
-                target.damage(DamageSource.player(player),10f);
+            if (((PlayerExtensions) player).dotwarden$getPowerLevel() > 0) {
+                target.damage(DamageSource.player(player),(float)Math.sqrt(((PlayerExtensions) player).dotwarden$getPowerLevel()) + 3);
             } else {
                 stack.damage(1, attacker, (e) -> {
                     e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
@@ -50,14 +39,6 @@ public class SculkedKnifeItem extends Item {
             return true;
         }
         return false;
-    }
-    private int findPower(PlayerEntity player) {
-        for (int i = 0; i < 36; i++) {
-            if (player.getInventory().getStack(i).isOf(ModItems.POWER_OF_THE_DISCIPLE)) {
-                return i;
-            }
-        }
-        return -1;
     }
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
