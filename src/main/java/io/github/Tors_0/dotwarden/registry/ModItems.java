@@ -1,14 +1,14 @@
-package raeeeee.dotwarden.registry;
+package io.github.Tors_0.dotwarden.registry;
 
+import io.github.Tors_0.dotwarden.DOTWarden;
+import io.github.Tors_0.dotwarden.item.PowerItem;
+import io.github.Tors_0.dotwarden.item.SculkedKnifeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
-import raeeeee.dotwarden.DOTWarden;
-import raeeeee.dotwarden.item.PowerItem;
-import raeeeee.dotwarden.item.SculkedKnifeItem;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

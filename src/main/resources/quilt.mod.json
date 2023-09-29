@@ -1,7 +1,7 @@
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "io.github.Tors-0",
+		"group": "io.github.Tors_0",
 		"id": "dotwarden",
 		"version": "${version}",
 		"metadata": {
@@ -17,8 +17,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "raeeeee.dotwarden.DOTWarden",
-			"client_init": "raeeeee.dotwarden.DOTWardenClient"
+			"init": "io.github.Tors_0.dotwarden.DOTWarden",
+			"client_init": "io.github.Tors_0.dotwarden.DOTWardenClient"
 		},
 		"depends": [
 			{

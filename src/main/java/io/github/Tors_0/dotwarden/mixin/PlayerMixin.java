@@ -1,5 +1,6 @@
-package raeeeee.dotwarden.mixin;
+package io.github.Tors_0.dotwarden.mixin;
 
+import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
@@ -7,7 +8,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import raeeeee.dotwarden.extensions.PlayerExtensions;
 
 @Mixin(PlayerEntity.class)
 public class PlayerMixin implements PlayerExtensions {

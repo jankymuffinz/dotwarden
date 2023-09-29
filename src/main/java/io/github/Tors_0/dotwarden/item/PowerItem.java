@@ -1,5 +1,6 @@
-package raeeeee.dotwarden.item;
+package io.github.Tors_0.dotwarden.item;
 
+import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,9 +18,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.networking.api.PacketByteBufs;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
-import raeeeee.dotwarden.DOTWarden;
-import raeeeee.dotwarden.extensions.PlayerExtensions;
-import raeeeee.dotwarden.networking.DOTWNetworking;
+import io.github.Tors_0.dotwarden.DOTWarden;
+import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 
 import java.util.List;
 import java.util.function.Predicate;

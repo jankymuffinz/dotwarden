@@ -1,4 +1,4 @@
-package raeeeee.dotwarden.extensions;
+package io.github.Tors_0.dotwarden.extensions;
 
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,5 +1,6 @@
-package raeeeee.dotwarden.item;
+package io.github.Tors_0.dotwarden.item;
 
+import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -12,8 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import raeeeee.dotwarden.extensions.PlayerExtensions;
-import raeeeee.dotwarden.registry.ModItems;
+import io.github.Tors_0.dotwarden.registry.ModItems;
 
 import java.util.List;
 import java.util.function.Predicate;

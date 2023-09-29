@@ -1,12 +1,12 @@
-package raeeeee.dotwarden;
+package io.github.Tors_0.dotwarden;
 
+import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.entity_events.api.ServerPlayerEntityCopyCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import raeeeee.dotwarden.extensions.PlayerExtensions;
-import raeeeee.dotwarden.registry.ModItems;
+import io.github.Tors_0.dotwarden.registry.ModItems;
 
 public class DOTWarden implements ModInitializer {
 	public static final String ID = "dotwarden";

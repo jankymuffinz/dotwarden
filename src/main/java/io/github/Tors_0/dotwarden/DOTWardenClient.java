@@ -1,8 +1,8 @@
-package raeeeee.dotwarden;
+package io.github.Tors_0.dotwarden;
 
+import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
-import raeeeee.dotwarden.networking.DOTWNetworking;
 
 public class DOTWardenClient implements ClientModInitializer {
     /**
