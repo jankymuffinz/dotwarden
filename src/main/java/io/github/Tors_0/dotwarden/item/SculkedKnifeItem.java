@@ -1,6 +1,8 @@
 package io.github.Tors_0.dotwarden.item;
 
+import io.github.Tors_0.dotwarden.DOTWarden;
 import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
+import io.github.Tors_0.dotwarden.registry.ModItems;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -11,15 +13,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import io.github.Tors_0.dotwarden.registry.ModItems;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 public class SculkedKnifeItem extends Item {
-    private static final Predicate<ItemStack> POWER_SOURCE = itemStack -> (itemStack.isOf(ModItems.POWER_OF_THE_DISCIPLE));
+    private static final Predicate<ItemStack> SACRIFICE = (itemStack) -> (itemStack.isOf(ModItems.POWER_OF_THE_DISCIPLE) || itemStack.isOf(ModItems.CORRUPTED_HEART));
     public SculkedKnifeItem(Settings settings) {
         super(settings);
     }
@@ -27,7 +30,7 @@ public class SculkedKnifeItem extends Item {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof PlayerEntity player) {
             if (((PlayerExtensions) player).dotwarden$getPowerLevel() > 0) {
-                target.damage(DamageSource.player(player),(float)Math.sqrt(((PlayerExtensions) player).dotwarden$getPowerLevel()) + 3);
+                target.damage(DamageSource.player(player),((PlayerExtensions) player).dotwarden$getPowerLevel() / 5f);
             } else {
                 stack.damage(1, attacker, (e) -> {
                     e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
@@ -37,6 +40,18 @@ public class SculkedKnifeItem extends Item {
             return true;
         }
         return false;
+    }
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (!world.isClient()) {
+            if (!user.getInventory().anyMatch(SACRIFICE)) {
+                user.damage(DamageSource.player(user),30f);
+                ItemStack itm = new ItemStack(ModItems.CORRUPTED_HEART);
+                itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner",user.getName().getString());
+                user.getInventory().insertStack(itm);
+            }
+        }
+        return super.use(world, user, hand);
     }
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

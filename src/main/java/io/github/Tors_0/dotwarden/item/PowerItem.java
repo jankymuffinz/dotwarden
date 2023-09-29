@@ -82,7 +82,6 @@ public class PowerItem extends Item {
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(((PlayerExtensions)entity).dotwarden$getPowerLevel());
                 ServerPlayNetworking.send((ServerPlayerEntity) player, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
-            } else {
                 stack.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", player.dotwarden$getPowerLevel());
             }
         }
