@@ -1,8 +1,5 @@
 package raeeeee.dotwarden;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtInt;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.entity_events.api.ServerPlayerEntityCopyCallback;
@@ -10,10 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import raeeeee.dotwarden.extensions.PlayerExtensions;
 import raeeeee.dotwarden.registry.ModItems;
-
-import java.net.http.WebSocket;
-import java.util.EventListener;
-import java.util.HashMap;
 
 public class DOTWarden implements ModInitializer {
 	public static final String ID = "dotwarden";

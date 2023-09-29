@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -15,12 +15,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.networking.api.PacketByteBufs;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 import raeeeee.dotwarden.DOTWarden;
 import raeeeee.dotwarden.extensions.PlayerExtensions;
+import raeeeee.dotwarden.networking.DOTWNetworking;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Predicate;
 
 import static net.minecraft.text.Style.EMPTY;
@@ -35,7 +36,6 @@ public class PowerItem extends Item {
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (!world.isClient()) {
-            DOTWarden.LOGGER.info("powerlevel: " + ((PlayerExtensions) user).dotwarden$getPowerLevel());
             if (user.getInventory().contains(new ItemStack(Items.SCULK))) {
                 if (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") == 0) {
                     user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
@@ -78,7 +78,13 @@ public class PowerItem extends Item {
 	}
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerExtensions player) {
-            stack.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", player.dotwarden$getPowerLevel());
+            if (!world.isClient()) {
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeInt(((PlayerExtensions)entity).dotwarden$getPowerLevel());
+                ServerPlayNetworking.send((ServerPlayerEntity) player, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
+            } else {
+                stack.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", player.dotwarden$getPowerLevel());
+            }
         }
     }
 	@Override
@@ -87,7 +93,8 @@ public class PowerItem extends Item {
 		Text tip1 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip");
 		Text tip2 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip1");
 		tooltip.add(Text.literal("").append(tip1).append(": " + stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevels")).setStyle(style));
-		tooltip.add(Text.literal("").append(tip2).append(": " + (int)(stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power") / (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.GRAY)));
+		tooltip.add(Text.literal("").append(tip2).append(": " + (int)(stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power") /
+                (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.GRAY)));
 		super.appendTooltip(stack, world, tooltip, context);
 	}
 }

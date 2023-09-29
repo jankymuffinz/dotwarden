@@ -17,7 +17,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "raeeeee.dotwarden.DOTWarden"
+			"init": "raeeeee.dotwarden.DOTWarden",
+			"client_init": "raeeeee.dotwarden.DOTWardenClient"
 		},
 		"depends": [
 			{
