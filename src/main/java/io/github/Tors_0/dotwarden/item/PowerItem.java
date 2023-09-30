@@ -86,11 +86,18 @@ public class PowerItem extends Item {
             }
         }
     }
+    @Override
+    public ItemStack getDefaultStack() {
+        ItemStack itm = new ItemStack(this);
+        itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner","nobody");
+        return itm;
+    }
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		Style style = EMPTY.withColor(Formatting.DARK_AQUA);
 		Text tip1 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip");
 		Text tip2 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip1");
+        tooltip.add(Text.literal(stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner")).append(Text.translatable("item.dotwarden.power_of_the_disciple.tooltip2")));
 		tooltip.add(Text.literal("").append(tip1).append(": " + stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevels")).setStyle(style));
 		tooltip.add(Text.literal("").append(tip2).append(": " + (int)(stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power") /
                 (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.GRAY)));

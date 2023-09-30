@@ -24,7 +24,9 @@ public interface ModItems {
     Item SCULKED_KNIFE = createItem("sculked_knife", new SculkedKnifeItem(new QuiltItemSettings().maxCount(1)
             .group(ItemGroup.COMBAT).rarity(Rarity.RARE).maxDamage(50)));
     Item CORRUPTED_HEART = createItem("corrupted_heart", new CorruptedHeartItem(new QuiltItemSettings()
-            .rarity(Rarity.RARE).maxCount(1).fireproof()));
+            .rarity(Rarity.RARE).maxCount(1).fireproof().group(ItemGroup.MISC)));
+    Item CAPTURED_SOUL = createItem("captured_soul", new Item(new QuiltItemSettings().group(ItemGroup.MISC)));
+    Item SCULK_CORE = createItem("sculk_core", new Item(new QuiltItemSettings().group(ItemGroup.MISC)));
 
 	private static <T extends Item> T createItem(String name, T item) {
 		ITEMS.put(item, new Identifier(DOTWarden.ID, name));
