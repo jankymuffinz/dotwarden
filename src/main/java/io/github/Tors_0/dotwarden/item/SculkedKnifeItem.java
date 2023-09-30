@@ -2,6 +2,7 @@ package io.github.Tors_0.dotwarden.item;
 
 import io.github.Tors_0.dotwarden.DOTWarden;
 import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
+import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
 import io.github.Tors_0.dotwarden.registry.ModItems;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
@@ -10,6 +11,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -17,6 +20,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.networking.api.PacketByteBufs;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -44,11 +49,15 @@ public class SculkedKnifeItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
-            if (!user.getInventory().anyMatch(SACRIFICE)) {
-                user.damage(DamageSource.player(user),30f);
+            if (!((PlayerExtensions)user).dotwarden$hasSacrificed()) {
                 ItemStack itm = new ItemStack(ModItems.CORRUPTED_HEART);
                 itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner",user.getName().getString());
                 user.getInventory().insertStack(itm);
+                user.damage(DamageSource.player(user),30f);
+                ((PlayerExtensions)user).dotwarden$setSacrifice(true);
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeBoolean(((PlayerExtensions)user).dotwarden$hasSacrificed());
+                ServerPlayNetworking.send((ServerPlayerEntity) user, DOTWNetworking.SYNC_SACRIFICE_ID, buf);
             }
         }
         return super.use(world, user, hand);

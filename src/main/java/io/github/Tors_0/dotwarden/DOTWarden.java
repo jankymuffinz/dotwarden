@@ -1,6 +1,7 @@
 package io.github.Tors_0.dotwarden;
 
 import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.entity_events.api.ServerPlayerEntityCopyCallback;
@@ -23,7 +24,8 @@ public class DOTWarden implements ModInitializer {
 
         ServerPlayerEntityCopyCallback.EVENT.register((copy, original, wasDeath) -> {
             if (copy instanceof PlayerExtensions playerNew && original instanceof PlayerExtensions playerOld) {
-                ((PlayerExtensions) copy).dotwarden$setPowerLevel(((PlayerExtensions) original).dotwarden$getPowerLevel());
+                playerNew.dotwarden$setPowerLevel(playerOld.dotwarden$getPowerLevel());
+                playerNew.dotwarden$setSacrifice(playerOld.dotwarden$hasSacrificed());
             }
         });
 	}

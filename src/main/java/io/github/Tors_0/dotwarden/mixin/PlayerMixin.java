@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class PlayerMixin implements PlayerExtensions {
     @Unique
     private int dotwarden$powerLevel = 0;
+    @Unique
+    private boolean dotwarden$hasSacrificed = false;
     @Override
     public int dotwarden$getPowerLevel() {
         return dotwarden$powerLevel;
@@ -21,12 +23,25 @@ public class PlayerMixin implements PlayerExtensions {
     public void dotwarden$setPowerLevel(int value) {
         this.dotwarden$powerLevel = value;
     }
+
+    @Override
+    public boolean dotwarden$hasSacrificed() {
+        return this.dotwarden$hasSacrificed;
+    }
+
+    @Override
+    public void dotwarden$setSacrifice(boolean state) {
+        this.dotwarden$hasSacrificed = state;
+    }
+
     @Inject(method="writeCustomDataToNbt", at = @At("TAIL"))
     public void dotwarden$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
         nbt.putInt("powerlevel",this.dotwarden$powerLevel);
+        nbt.putBoolean("hasSacrificed",this.dotwarden$hasSacrificed);
     }
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     public void dotwarden$readCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
         this.dotwarden$powerLevel = nbt.getInt("powerlevel");
+        this.dotwarden$hasSacrificed = nbt.getBoolean("hasSacrificed");
     }
 }

@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 public interface PlayerExtensions {
     int dotwarden$getPowerLevel();
-
     void dotwarden$setPowerLevel(int value);
+    boolean dotwarden$hasSacrificed();
+    void dotwarden$setSacrifice(boolean state);
 }
