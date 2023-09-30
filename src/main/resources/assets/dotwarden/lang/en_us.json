@@ -3,6 +3,11 @@
   "item.dotwarden.power_of_the_disciple.tooltip": "Power",
   "item.dotwarden.power_of_the_disciple.tooltip1": "Progress",
   "item.dotwarden.sculked_knife": "Sculked Dagger",
+  "item.dotwarden.sculked_knife.tooltip": "Damage: ",
   "item.dotwarden.power_of_the_disciple.tooltip2": "'s Heart",
-  "item.dotwarden.corrupted_heart": "Corrupted Heart"
+  "item.dotwarden.corrupted_heart": "Corrupted Heart",
+  "item.dotwarden.sculk_core": "Soul Core",
+  "item.dotwarden.captured_soul": "Captured Soul",
+  "item.dotwarden.captured_soul.tooltip": "A Soul taken from the Warden's ribcage...",
+  "item.dotwarden.echo_chamber": "Echo Chamber"
 }

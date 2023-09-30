@@ -1,5 +1,7 @@
 package io.github.Tors_0.dotwarden.item;
 
+import io.github.Tors_0.dotwarden.DOTWarden;
+import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
@@ -18,8 +20,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.quiltmc.qsl.networking.api.PacketByteBufs;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
-import io.github.Tors_0.dotwarden.DOTWarden;
-import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -54,6 +54,9 @@ public class PowerItem extends Item {
                                     ptsUntilNextLevel(user.getStackInHand(hand)));
                     ((PlayerExtensions) user).dotwarden$setPowerLevel(((PlayerExtensions) user).dotwarden$getPowerLevel()+1);
                 }
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeInt(((PlayerExtensions)user).dotwarden$getPowerLevel());
+                ServerPlayNetworking.send((ServerPlayerEntity)user, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
                 return TypedActionResult.success(user.getStackInHand(hand),true);
             } else {
                 while (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") >= ptsUntilNextLevel(user.getStackInHand(hand))) {
@@ -62,6 +65,9 @@ public class PowerItem extends Item {
                                     ptsUntilNextLevel(user.getStackInHand(hand)));
                     ((PlayerExtensions) user).dotwarden$setPowerLevel(((PlayerExtensions) user).dotwarden$getPowerLevel()+1);
                 }
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeInt(((PlayerExtensions)user).dotwarden$getPowerLevel());
+                ServerPlayNetworking.send((ServerPlayerEntity)user, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
                 return TypedActionResult.pass(user.getStackInHand(hand));
             }
 		}
@@ -79,9 +85,6 @@ public class PowerItem extends Item {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerExtensions player) {
             if (!world.isClient()) {
-                PacketByteBuf buf = PacketByteBufs.create();
-                buf.writeInt(((PlayerExtensions)entity).dotwarden$getPowerLevel());
-                ServerPlayNetworking.send((ServerPlayerEntity) player, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
                 stack.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", player.dotwarden$getPowerLevel());
             }
         }
@@ -89,7 +92,7 @@ public class PowerItem extends Item {
     @Override
     public ItemStack getDefaultStack() {
         ItemStack itm = new ItemStack(this);
-        itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner","nobody");
+        itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner","Nobody");
         return itm;
     }
 	@Override
@@ -97,7 +100,9 @@ public class PowerItem extends Item {
 		Style style = EMPTY.withColor(Formatting.DARK_AQUA);
 		Text tip1 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip");
 		Text tip2 = Text.translatable("item.dotwarden.power_of_the_disciple.tooltip1");
-        tooltip.add(Text.literal(stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner")).append(Text.translatable("item.dotwarden.power_of_the_disciple.tooltip2")));
+        tooltip.add(Text.literal(!stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner").isEmpty() ?
+                stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner"): "Nobody")
+                .append(Text.translatable("item.dotwarden.power_of_the_disciple.tooltip2")));
 		tooltip.add(Text.literal("").append(tip1).append(": " + stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevels")).setStyle(style));
 		tooltip.add(Text.literal("").append(tip2).append(": " + (int)(stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power") /
                 (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.GRAY)));

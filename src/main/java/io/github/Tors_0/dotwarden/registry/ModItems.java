@@ -1,9 +1,7 @@
 package io.github.Tors_0.dotwarden.registry;
 
 import io.github.Tors_0.dotwarden.DOTWarden;
-import io.github.Tors_0.dotwarden.item.CorruptedHeartItem;
-import io.github.Tors_0.dotwarden.item.PowerItem;
-import io.github.Tors_0.dotwarden.item.SculkedKnifeItem;
+import io.github.Tors_0.dotwarden.item.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -25,8 +23,9 @@ public interface ModItems {
             .group(ItemGroup.COMBAT).rarity(Rarity.RARE).maxDamage(50)));
     Item CORRUPTED_HEART = createItem("corrupted_heart", new CorruptedHeartItem(new QuiltItemSettings()
             .rarity(Rarity.RARE).maxCount(1).fireproof().group(ItemGroup.MISC)));
-    Item CAPTURED_SOUL = createItem("captured_soul", new Item(new QuiltItemSettings().group(ItemGroup.MISC)));
+    Item CAPTURED_SOUL = createItem("captured_soul", new SoulItem(new QuiltItemSettings().group(ItemGroup.MISC).maxCount(4)));
     Item SCULK_CORE = createItem("sculk_core", new Item(new QuiltItemSettings().group(ItemGroup.MISC)));
+    Item ECHO_CHAMBER = createItem("echo_chamber", new EchoChamberItem(new QuiltItemSettings().group(ItemGroup.TOOLS)));
 
 	private static <T extends Item> T createItem(String name, T item) {
 		ITEMS.put(item, new Identifier(DOTWarden.ID, name));

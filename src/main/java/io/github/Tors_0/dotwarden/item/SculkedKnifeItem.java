@@ -4,7 +4,10 @@ import io.github.Tors_0.dotwarden.DOTWarden;
 import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
 import io.github.Tors_0.dotwarden.registry.ModItems;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -61,7 +64,23 @@ public class SculkedKnifeItem extends Item {
         return super.use(world, user, hand);
     }
     @Override
+    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
+        if (state.isOf(Blocks.COBWEB)) {
+            return 5.0F;
+        } else {
+            return 0.3F;
+        }
+    }
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        if (entity instanceof PlayerExtensions player) {
+            if (!world.isClient()) {
+                stack.getOrCreateSubNbt(DOTWarden.ID).putInt("power", player.dotwarden$getPowerLevel());
+            }
+        }
+    }
+    @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable("item.dotwarden.sculked_knife.tooltip").append("" + (stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power") / 5.0F)));
         super.appendTooltip(stack, world, tooltip, context);
     }
 }
