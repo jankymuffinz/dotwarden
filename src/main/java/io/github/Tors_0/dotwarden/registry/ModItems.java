@@ -23,7 +23,7 @@ public interface ModItems {
             .group(ItemGroup.COMBAT).rarity(Rarity.RARE).maxDamage(50)));
     Item CORRUPTED_HEART = createItem("corrupted_heart", new CorruptedHeartItem(new QuiltItemSettings()
             .rarity(Rarity.RARE).maxCount(1).fireproof().group(ItemGroup.MISC)));
-    Item CAPTURED_SOUL = createItem("captured_soul", new SoulItem(new QuiltItemSettings().group(ItemGroup.MISC).maxCount(4)));
+    Item CAPTURED_SOUL = createItem("captured_soul", new SoulItem(new QuiltItemSettings().group(ItemGroup.MISC)));
     Item SCULK_CORE = createItem("sculk_core", new Item(new QuiltItemSettings().group(ItemGroup.MISC)));
     Item ECHO_CHAMBER = createItem("echo_chamber", new EchoChamberItem(new QuiltItemSettings().group(ItemGroup.TOOLS)));
 
