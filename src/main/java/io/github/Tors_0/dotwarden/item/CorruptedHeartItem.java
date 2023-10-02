@@ -27,4 +27,8 @@ public class CorruptedHeartItem extends Item {
                 stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner"): "Nobody"));
         super.appendTooltip(stack, world, tooltip, context);
     }
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return !stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner").isEmpty();
+    }
 }

@@ -25,10 +25,8 @@ import org.quiltmc.qsl.networking.api.PacketByteBufs;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public class SculkedKnifeItem extends Item {
-    private static final Predicate<ItemStack> SACRIFICE = (itemStack) -> (itemStack.isOf(ModItems.POWER_OF_THE_DISCIPLE) || itemStack.isOf(ModItems.CORRUPTED_HEART));
     public SculkedKnifeItem(Settings settings) {
         super(settings);
     }
@@ -54,7 +52,7 @@ public class SculkedKnifeItem extends Item {
                 ItemStack itm = new ItemStack(ModItems.CORRUPTED_HEART);
                 itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner",user.getName().getString());
                 user.getInventory().insertStack(itm);
-                user.damage(DamageSource.player(user),30f);
+                user.damage(DamageSource.magic(user,user),100f);
                 ((PlayerExtensions)user).dotwarden$setSacrifice(true);
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeBoolean(((PlayerExtensions)user).dotwarden$hasSacrificed());
@@ -62,6 +60,10 @@ public class SculkedKnifeItem extends Item {
             }
         }
         return super.use(world, user, hand);
+    }
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
     }
     @Override
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {

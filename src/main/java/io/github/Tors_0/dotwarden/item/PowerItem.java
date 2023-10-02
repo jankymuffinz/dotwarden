@@ -95,6 +95,10 @@ public class PowerItem extends Item {
         itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner","Nobody");
         return itm;
     }
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return !stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner").isEmpty();
+    }
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		Style style = EMPTY.withColor(Formatting.DARK_AQUA);
