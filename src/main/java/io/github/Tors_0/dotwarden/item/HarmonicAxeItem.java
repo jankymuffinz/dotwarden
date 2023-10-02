@@ -1,5 +1,6 @@
 package io.github.Tors_0.dotwarden.item;
 
+import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -47,11 +48,12 @@ public class HarmonicAxeItem extends Item {
                     VALID_ENTITY,
                     effectiveRangeSq
             );
-            if (
-                    entityHitResult != null
-                            && entityHitResult.getEntity() instanceof LivingEntity livingEntity
+            if (entityHitResult != null
+                    && entityHitResult.getEntity() instanceof LivingEntity livingEntity
+                    && ((PlayerExtensions)player).dotwarden$getPowerLevel() > 2
             ) {
                 player.getItemCooldownManager().set(this, 100);
+                ((PlayerExtensions)player).dotwarden$setPowerLevel(((PlayerExtensions)player).dotwarden$getPowerLevel() - 2);
                 Vec3d vec3d2 = livingEntity.getEyePos().subtract(startPoint);
                 Vec3d vec3d3 = vec3d2.normalize();
                 for (int i = 1; i < MathHelper.floor(vec3d2.length()) + 7; ++i) {
@@ -59,7 +61,7 @@ public class HarmonicAxeItem extends Item {
                     ((ServerWorld) world).spawnParticles(ParticleTypes.SONIC_BOOM, vec3d4.x, vec3d4.y, vec3d4.z, 1, 0.0, 0.0, 0.0, 0.0);
                 }
                 player.playSound(SoundEvents.ENTITY_WARDEN_SONIC_BOOM, SoundCategory.PLAYERS, 3.0F, 1.0F);
-                livingEntity.damage(DamageSource.method_43964(player), 10.0F);
+                livingEntity.damage(DamageSource.method_43964(player), 6.0F);
                 double d = 0.5 * (1.0 - livingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
                 double e = 2.5 * (1.0 - livingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
                 livingEntity.addVelocity(vec3d3.getX() * e, vec3d3.getY() * d, vec3d3.getZ() * e);
