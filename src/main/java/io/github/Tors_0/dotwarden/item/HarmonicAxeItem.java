@@ -20,6 +20,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -32,7 +33,17 @@ public class HarmonicAxeItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!world.isClient()) {
-            HitResult blockResult = player.raycast(16d,1f,false);
+            double maxDistance = 16d;
+            float tickDelta = 1f;
+            Vec3d vec3d = player.getCameraPosVec(tickDelta);
+            Vec3d vec3d5 = player.getRotationVec(tickDelta);
+            Vec3d vec3d6 = vec3d.add(vec3d5.x * maxDistance, vec3d5.y * maxDistance, vec3d5.z * maxDistance);
+            HitResult blockResult = world
+                    .raycast(
+                            new RaycastContext(
+                                    vec3d, vec3d6, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player
+                            )
+                    );
             Vec3d startPoint = player.getPos().add(0.0, 1.6F, 0.0);
             double distanceToBlockSq = blockResult != null ? blockResult.getPos().squaredDistanceTo(startPoint) : Double.POSITIVE_INFINITY;
             Vec3d rotationVec = player.getRotationVec(1.0F);
