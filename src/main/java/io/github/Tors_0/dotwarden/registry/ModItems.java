@@ -26,7 +26,7 @@ public interface ModItems {
     Item CAPTURED_SOUL = createItem("captured_soul", new SoulItem(new QuiltItemSettings().group(ItemGroup.MISC)));
     Item SCULK_CORE = createItem("sculk_core", new Item(new QuiltItemSettings().group(ItemGroup.MISC)));
     Item ECHO_CHAMBER = createItem("echo_chamber", new EchoChamberItem(new QuiltItemSettings().group(ItemGroup.TOOLS).maxCount(1)));
-    Item HARMONIC_AXE = createItem("harmonic_axe", new Item(new QuiltItemSettings().group(ItemGroup.COMBAT)));
+    Item HARMONIC_AXE = createItem("harmonic_axe", new HarmonicAxeItem(new QuiltItemSettings().group(ItemGroup.COMBAT)));
     Item BANSHEE_HORN = createItem("banshee_horn", new Item(new QuiltItemSettings().group(ItemGroup.COMBAT)));
     Item SCULK_BELL = createItem("sculk_bell", new Item(new QuiltItemSettings().group(ItemGroup.COMBAT)));
     Item TUNING_TRIDENT = createItem("tuning_trident", new Item(new QuiltItemSettings().group(ItemGroup.COMBAT)));

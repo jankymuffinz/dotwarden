@@ -1,9 +1,9 @@
 package io.github.Tors_0.dotwarden.networking;
 
-import net.minecraft.util.Identifier;
-import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 import io.github.Tors_0.dotwarden.DOTWarden;
 import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
+import net.minecraft.util.Identifier;
+import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 public class DOTWNetworking {
     public static final Identifier POWERLEVEL_PACKET_ID = new Identifier(DOTWarden.ID,"sync_power");
