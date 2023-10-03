@@ -36,6 +36,7 @@ public class PowerItem extends Item {
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 		if (!world.isClient()) {
+            user.getItemCooldownManager().set(this,20);
             if (user.getInventory().contains(new ItemStack(Items.SCULK))) {
                 if (user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).getInt("power") == 0) {
                     user.getStackInHand(hand).getOrCreateSubNbt(DOTWarden.ID).putInt("power",
@@ -96,8 +97,26 @@ public class PowerItem extends Item {
         return itm;
     }
     @Override
-    public boolean hasGlint(ItemStack stack) {
-        return !stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner").isEmpty();
+    public boolean isItemBarVisible(ItemStack stack) {
+        return true;
+    }
+    @Override
+    public int getItemBarStep(ItemStack stack) {
+        return (stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevels") % 13) + 1;
+    }
+    @Override
+    public int getItemBarColor(ItemStack stack) {
+        return switch ((int) (stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevels") / 13f)) {
+            default -> 0x8d6acc;
+            case 0 -> 0xff1212;
+            case 1 -> 0xf5a031;
+            case 2 -> 0xf2f74d;
+            case 3 -> 0x8fed66;
+            case 4 -> 0x7af5ab;
+            case 5 -> 0x6af3f7;
+            case 6 -> 0x428aed;
+            case 7 -> 0x4e35f0;
+        };
     }
 	@Override
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

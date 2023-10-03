@@ -25,7 +25,9 @@ public class DOTWardenClient implements ClientModInitializer {
     @Override
     public void onInitializeClient(ModContainer mod) {
         DOTWNetworking.init();
-        Item item = ModItems.HARMONIC_SPEAR;
+
+        // code from RealRTTV/malum-quilt
+        Item item = ModItems.HARMONIC_STAFF;
         Identifier scytheId = Registry.ITEM.getId(item);
         ScytheItemRenderer scytheItemRenderer = new ScytheItemRenderer(scytheId);
         ResourceLoader.get(ResourceType.CLIENT_RESOURCES).registerReloader(scytheItemRenderer);

@@ -12,10 +12,14 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -73,11 +77,13 @@ public class EchoChamberItem extends BundleItem {
         }
     }
     private void playRemoveOneSound(Entity entity) {
-        entity.playSound(SoundEvents.ITEM_BUNDLE_REMOVE_ONE, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
+        entity.playSound(SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
     }
-
+    private void playDropContentsSound(Entity entity) {
+        entity.playSound(SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * -0.4F);
+    }
     private void playInsertSound(Entity entity) {
-        entity.playSound(SoundEvents.ITEM_BUNDLE_INSERT, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
+        entity.playSound(SoundEvents.BLOCK_RESPAWN_ANCHOR_CHARGE, 0.8F, 0.8F + entity.getWorld().getRandom().nextFloat() * 0.4F);
     }
     private static Optional<ItemStack> removeFirstStack(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
@@ -145,7 +151,36 @@ public class EchoChamberItem extends BundleItem {
                 .filter(nbt -> ItemStack.canCombine(ItemStack.fromNbt(nbt), stack))
                 .findFirst();
     }
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack itemStack = user.getStackInHand(hand);
+        if (dropAllBundledItems(itemStack, user)) {
+            this.playDropContentsSound(user);
+            user.incrementStat(Stats.USED.getOrCreateStat(this));
+            return TypedActionResult.success(itemStack, world.isClient());
+        } else {
+            return TypedActionResult.fail(itemStack);
+        }
+    }
+    private static boolean dropAllBundledItems(ItemStack stack, PlayerEntity player) {
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        if (!nbtCompound.contains("Items")) {
+            return false;
+        } else {
+            if (player instanceof ServerPlayerEntity) {
+                NbtList nbtList = nbtCompound.getList("Items", NbtElement.COMPOUND_TYPE);
 
+                for(int i = 0; i < nbtList.size(); ++i) {
+                    NbtCompound nbtCompound2 = nbtList.getCompound(i);
+                    ItemStack itemStack = ItemStack.fromNbt(nbtCompound2);
+                    player.dropItem(itemStack, true);
+                }
+            }
+
+            stack.removeSubNbt("Items");
+            return true;
+        }
+    }
     private static int getItemOccupancy(ItemStack stack) {
         return (int)(64 / (float)stack.getMaxCount());
     }
