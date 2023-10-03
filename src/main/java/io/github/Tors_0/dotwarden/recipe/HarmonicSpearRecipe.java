@@ -12,11 +12,11 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-public class HarmonicAxeRecipe extends SpecialCraftingRecipe {
+public class HarmonicSpearRecipe extends SpecialCraftingRecipe {
     private static final Ingredient ECHO_CHAMBER = Ingredient.ofItems(ModItems.ECHO_CHAMBER);
     private static final Ingredient NETHERITE_AXE = Ingredient.ofItems(Items.NETHERITE_AXE);
 
-    public HarmonicAxeRecipe(Identifier id) {
+    public HarmonicSpearRecipe(Identifier id) {
         super(id);
     }
 
@@ -50,7 +50,7 @@ public class HarmonicAxeRecipe extends SpecialCraftingRecipe {
                     && ItemStack.fromNbt(echoStack.getOrCreateNbt().getList("Items", NbtElement.COMPOUND_TYPE).getCompound(0)).getCount() == 1
             ) {
                 if (inventory.getStack(i-3).isOf(Items.NETHERITE_AXE)) {
-                    return new ItemStack(ModItems.HARMONIC_AXE);
+                    return new ItemStack(ModItems.HARMONIC_SPEAR);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class HarmonicAxeRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack getOutput() {
-        return new ItemStack(ModItems.HARMONIC_AXE);
+        return new ItemStack(ModItems.HARMONIC_SPEAR);
     }
 
     @Override

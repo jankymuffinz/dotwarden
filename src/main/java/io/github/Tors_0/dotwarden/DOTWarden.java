@@ -1,7 +1,7 @@
 package io.github.Tors_0.dotwarden;
 
 import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
-import io.github.Tors_0.dotwarden.recipe.HarmonicAxeRecipe;
+import io.github.Tors_0.dotwarden.recipe.HarmonicSpearRecipe;
 import io.github.Tors_0.dotwarden.registry.ModItems;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.entity.EntityType;
@@ -22,8 +22,8 @@ public class DOTWarden implements ModInitializer {
 	// It is considered best practice to use your mod name as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
-    public static final SpecialRecipeSerializer<HarmonicAxeRecipe> HARMONIC_AXE_RECIPE = RecipeSerializer.register(
-            "dotwarden:harmonic_axe", new SpecialRecipeSerializer<>(HarmonicAxeRecipe::new)
+    public static final SpecialRecipeSerializer<HarmonicSpearRecipe> HARMONIC_AXE_RECIPE = RecipeSerializer.register(
+            "dotwarden:harmonic_axe", new SpecialRecipeSerializer<>(HarmonicSpearRecipe::new)
     );
     private static final Identifier WARDEN_LOOT_TABLE_ID = EntityType.WARDEN.getLootTableId();
 

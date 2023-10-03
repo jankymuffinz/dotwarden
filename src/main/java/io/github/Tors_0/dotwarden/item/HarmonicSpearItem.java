@@ -25,11 +25,11 @@ import net.minecraft.world.World;
 
 import java.util.function.Predicate;
 
-public class HarmonicAxeItem extends Item {
+public class HarmonicSpearItem extends Item {
     private static final Predicate<Entity> VALID_ENTITY = (entity -> (entity instanceof LivingEntity));
     private static final int POWER_LEVEL_COST = 3;
     private static final float BOOM_DAMAGE = 10.0F;
-    public HarmonicAxeItem(Settings settings) {
+    public HarmonicSpearItem(Settings settings) {
         super(settings);
     }
     @Override
@@ -42,11 +42,9 @@ public class HarmonicAxeItem extends Item {
             Vec3d vec3d5 = player.getRotationVec(tickDelta);
             Vec3d vec3d6 = vec3d.add(vec3d5.x * maxDistance, vec3d5.y * maxDistance, vec3d5.z * maxDistance);
             HitResult blockResult = world
-                    .raycast(
-                            new RaycastContext(
+                    .raycast(new RaycastContext(
                                     vec3d, vec3d6, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player
-                            )
-                    );
+                            ));
             Vec3d startPoint = player.getPos().add(0.0, 1.6F, 0.0);
             double distanceToBlockSq = blockResult != null ? blockResult.getPos().squaredDistanceTo(startPoint) : Double.POSITIVE_INFINITY;
             Vec3d rotationVec = player.getRotationVec(1.0F);
