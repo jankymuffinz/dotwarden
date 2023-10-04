@@ -52,7 +52,7 @@ public class SculkedKnifeItem extends Item {
                 ItemStack itm = new ItemStack(ModItems.CORRUPTED_HEART);
                 itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner",user.getName().getString());
                 user.getInventory().insertStack(itm);
-                user.damage(new DamageSource("heartstab"),100f);
+                user.damage(new DamageSource("heartstab").setBypassesArmor(),100f);
                 ((PlayerExtensions)user).dotwarden$setSacrifice(true);
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeBoolean(((PlayerExtensions)user).dotwarden$hasSacrificed());

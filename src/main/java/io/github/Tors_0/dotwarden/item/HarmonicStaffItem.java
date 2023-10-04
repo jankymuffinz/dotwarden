@@ -5,7 +5,7 @@ import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.mob.warden.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -37,9 +37,6 @@ public class HarmonicStaffItem extends Item {
     private static final float BOOM_DAMAGE = 10.0F;
     public HarmonicStaffItem(Settings settings) {
         super(settings);
-    }
-    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
-        player.playSound(SoundEvents.ENTITY_WARDEN_SONIC_CHARGE, SoundCategory.PLAYERS, 0.8F, 0.8F);
     }
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
@@ -86,7 +83,7 @@ public class HarmonicStaffItem extends Item {
                     ((ServerWorld) world).spawnParticles(ParticleTypes.SONIC_BOOM, vec3d4.x, vec3d4.y, vec3d4.z, 1, 0.0, 0.0, 0.0, 0.0);
                 }
                 player.playSound(SoundEvents.ENTITY_WARDEN_SONIC_BOOM, SoundCategory.PLAYERS, 3.0F, 1.0F);
-                livingEntity.damage(DamageSource.method_43964(player), BOOM_DAMAGE);
+                livingEntity.damage(new EntityDamageSource("sonic_boom", player).setUsesMagic(), BOOM_DAMAGE);
                 double d = 0.5 * (1.0 - livingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
                 double e = 2.5 * (1.0 - livingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
                 livingEntity.addVelocity(vec3d3.getX() * e, vec3d3.getY() * d, vec3d3.getZ() * e);
