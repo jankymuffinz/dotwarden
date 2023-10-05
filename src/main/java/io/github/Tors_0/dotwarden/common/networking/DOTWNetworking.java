@@ -1,7 +1,7 @@
-package io.github.Tors_0.dotwarden.networking;
+package io.github.Tors_0.dotwarden.common.networking;
 
-import io.github.Tors_0.dotwarden.DOTWarden;
-import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
+import io.github.Tors_0.dotwarden.common.DOTWarden;
+import io.github.Tors_0.dotwarden.common.extensions.PlayerExtensions;
 import net.minecraft.util.Identifier;
 import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 

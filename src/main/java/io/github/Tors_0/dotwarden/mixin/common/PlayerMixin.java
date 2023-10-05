@@ -1,6 +1,6 @@
-package io.github.Tors_0.dotwarden.mixin;
+package io.github.Tors_0.dotwarden.mixin.common;
 
-import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
+import io.github.Tors_0.dotwarden.common.extensions.PlayerExtensions;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;

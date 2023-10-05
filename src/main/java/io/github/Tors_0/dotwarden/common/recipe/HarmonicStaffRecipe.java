@@ -1,7 +1,7 @@
-package io.github.Tors_0.dotwarden.recipe;
+package io.github.Tors_0.dotwarden.common.recipe;
 
-import io.github.Tors_0.dotwarden.DOTWarden;
-import io.github.Tors_0.dotwarden.registry.ModItems;
+import io.github.Tors_0.dotwarden.common.DOTWarden;
+import io.github.Tors_0.dotwarden.common.registry.ModItems;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

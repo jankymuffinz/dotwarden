@@ -1,6 +1,6 @@
-package io.github.Tors_0.dotwarden.mixin;
+package io.github.Tors_0.dotwarden.mixin.client;
 
-import io.github.Tors_0.dotwarden.item.HarmonicStaffItem;
+import io.github.Tors_0.dotwarden.common.item.HarmonicStaffItem;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;

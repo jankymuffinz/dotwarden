@@ -1,8 +1,8 @@
-package io.github.Tors_0.dotwarden;
+package io.github.Tors_0.dotwarden.client;
 
 import io.github.Tors_0.dotwarden.client.render.ScytheItemRenderer;
-import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
-import io.github.Tors_0.dotwarden.registry.ModItems;
+import io.github.Tors_0.dotwarden.common.networking.DOTWNetworking;
+import io.github.Tors_0.dotwarden.common.registry.ModItems;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.util.ModelIdentifier;

@@ -1,9 +1,9 @@
-package io.github.Tors_0.dotwarden;
+package io.github.Tors_0.dotwarden.common;
 
-import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
-import io.github.Tors_0.dotwarden.recipe.BansheeHornRecipe;
-import io.github.Tors_0.dotwarden.recipe.HarmonicStaffRecipe;
-import io.github.Tors_0.dotwarden.registry.ModItems;
+import io.github.Tors_0.dotwarden.common.extensions.PlayerExtensions;
+import io.github.Tors_0.dotwarden.common.recipe.BansheeHornRecipe;
+import io.github.Tors_0.dotwarden.common.recipe.HarmonicStaffRecipe;
+import io.github.Tors_0.dotwarden.common.registry.ModItems;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.LootPool;

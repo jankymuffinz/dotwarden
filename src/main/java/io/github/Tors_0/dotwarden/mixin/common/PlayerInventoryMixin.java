@@ -1,6 +1,6 @@
-package io.github.Tors_0.dotwarden.mixin;
+package io.github.Tors_0.dotwarden.mixin.common;
 
-import io.github.Tors_0.dotwarden.registry.ModItems;
+import io.github.Tors_0.dotwarden.common.registry.ModItems;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

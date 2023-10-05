@@ -1,7 +1,7 @@
-package io.github.Tors_0.dotwarden.registry;
+package io.github.Tors_0.dotwarden.common.registry;
 
-import io.github.Tors_0.dotwarden.DOTWarden;
-import io.github.Tors_0.dotwarden.item.*;
+import io.github.Tors_0.dotwarden.common.DOTWarden;
+import io.github.Tors_0.dotwarden.common.item.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.tag.InstrumentTags;

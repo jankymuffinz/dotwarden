@@ -1,7 +1,4 @@
-package io.github.Tors_0.dotwarden.extensions;
-
-import net.minecraft.entity.player.PlayerEntity;
-import org.spongepowered.asm.mixin.Mixin;
+package io.github.Tors_0.dotwarden.common.extensions;
 
 public interface PlayerExtensions {
     int dotwarden$getPowerLevel();

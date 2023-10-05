@@ -1,4 +1,4 @@
-package io.github.Tors_0.dotwarden.item;
+package io.github.Tors_0.dotwarden.common.item;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;

@@ -1,4 +1,4 @@
-package io.github.Tors_0.dotwarden.mixin;
+package io.github.Tors_0.dotwarden.mixin.common;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;

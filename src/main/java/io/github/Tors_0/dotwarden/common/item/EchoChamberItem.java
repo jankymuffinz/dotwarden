@@ -1,6 +1,6 @@
-package io.github.Tors_0.dotwarden.item;
+package io.github.Tors_0.dotwarden.common.item;
 
-import io.github.Tors_0.dotwarden.registry.ModItems;
+import io.github.Tors_0.dotwarden.common.registry.ModItems;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

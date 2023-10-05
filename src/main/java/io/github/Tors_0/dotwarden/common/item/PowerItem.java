@@ -1,8 +1,8 @@
-package io.github.Tors_0.dotwarden.item;
+package io.github.Tors_0.dotwarden.common.item;
 
-import io.github.Tors_0.dotwarden.DOTWarden;
-import io.github.Tors_0.dotwarden.extensions.PlayerExtensions;
-import io.github.Tors_0.dotwarden.networking.DOTWNetworking;
+import io.github.Tors_0.dotwarden.common.DOTWarden;
+import io.github.Tors_0.dotwarden.common.extensions.PlayerExtensions;
+import io.github.Tors_0.dotwarden.common.networking.DOTWNetworking;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
