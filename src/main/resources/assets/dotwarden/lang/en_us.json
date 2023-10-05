@@ -10,6 +10,7 @@
   "item.dotwarden.captured_soul": "Captured Soul",
   "item.dotwarden.captured_soul.tooltip": "A Soul taken from the Warden's ribcage...",
   "item.dotwarden.echo_chamber": "Echo Chamber",
-  "death.attack.heartstab": "%1$s cut their heart out",
-  "item.dotwarden.harmonic_staff": "Harmonic Staff"
+  "death.attack.heartstab": "%1$s cut their own heart out",
+  "item.dotwarden.harmonic_staff": "Harmonic Staff",
+  "death.attack.banshee_blast": "%1$s has their eardrums blown out by a banshee blast"
 }

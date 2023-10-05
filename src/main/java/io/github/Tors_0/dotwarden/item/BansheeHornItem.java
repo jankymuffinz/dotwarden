@@ -32,7 +32,7 @@ import java.util.function.Predicate;
 
 public class BansheeHornItem extends Item {
     private static final Predicate<Entity> CAN_BE_HIT_ENTITY = entity -> (entity instanceof LivingEntity && !(entity instanceof WardenEntity));
-    private static final int MAX_RANGE = 5;
+    private static final float MAX_RANGE = 7.5f;
     private static final int POWER_LEVEL_COST = 10;
     private static final float BOOM_DAMAGE = 4.0F;
     public BansheeHornItem(Settings settings) {
@@ -64,11 +64,11 @@ public class BansheeHornItem extends Item {
                 LivingEntity livingEntity = (LivingEntity) entity;
                 Vec3d vec3d2 = livingEntity.getEyePos().subtract(startPoint);
                 Vec3d vec3d3 = vec3d2.normalize();
-                livingEntity.damage(new EntityDamageSource("sonic_boom", user).setUsesMagic(), BOOM_DAMAGE);
+                livingEntity.damage(new EntityDamageSource("banshee_blast", user).setUsesMagic(), BOOM_DAMAGE);
                 double d = 0.5 * (1.0 - livingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
                 double e = 2.5 * (1.0 - livingEntity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
-                livingEntity.addVelocity(vec3d3.getX() * e, vec3d3.getY() * d + 0.5, vec3d3.getZ() * e);
-                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 20, 1));
+                livingEntity.addVelocity(vec3d3.getX() * e, vec3d3.getY() * d + 0.35, vec3d3.getZ() * e);
+                livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.DARKNESS, 400, 1));
             });
             user.playSound(SoundEvents.BLOCK_SCULK_SHRIEKER_SHRIEK, SoundCategory.PLAYERS, 1f, 1f);
             Vec3d vec3d = user.getPos();
