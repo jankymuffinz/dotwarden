@@ -2,7 +2,7 @@
   "item.dotwarden.power_of_the_disciple": "Power of the Disciple",
   "item.dotwarden.power_of_the_disciple.tooltip": "Power",
   "item.dotwarden.power_of_the_disciple.tooltip1": "Progress",
-  "item.dotwarden.sculked_knife": "Sculked Dagger",
+  "item.dotwarden.sculked_knife": "Sacrificial Sword",
   "item.dotwarden.sculked_knife.tooltip": "Damage: ",
   "item.dotwarden.power_of_the_disciple.tooltip2": "'s Heart",
   "item.dotwarden.corrupted_heart": "Corrupted Heart",
@@ -12,5 +12,7 @@
   "item.dotwarden.echo_chamber": "Echo Chamber",
   "death.attack.heartstab": "%1$s cut their own heart out",
   "item.dotwarden.harmonic_staff": "Harmonic Staff",
-  "death.attack.banshee_blast": "%1$s has their eardrums blown out by a banshee blast"
+  "death.attack.banshee_blast": "%1$s heard an offensively loud shriek",
+  "death.attack.banshee_blast.player": "%1$s heard an offensively loud shriek from %2$s",
+  "death.attack.banshee_blast.player.item": "%1$s heard an offensively loud shriek from %2$s using %3$s"
 }
