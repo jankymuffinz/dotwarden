@@ -9,7 +9,8 @@ import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.mob.warden.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.item.Item;
+import net.minecraft.item.Instrument;
+import net.minecraft.item.InstrumentItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
@@ -17,6 +18,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -31,13 +33,15 @@ import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.function.Predicate;
 
-public class HarmonicStaffItem extends Item {
+public class HarmonicStaffItem extends InstrumentItem {
     private static final Predicate<Entity> VALID_ENTITY = (entity -> (entity instanceof LivingEntity && !(entity instanceof WardenEntity)));
     private static final int POWER_LEVEL_COST = 3;
     private static final float BOOM_DAMAGE = 10.0F;
-    public HarmonicStaffItem(Settings settings) {
-        super(settings);
+
+    public HarmonicStaffItem(Settings settings, TagKey<Instrument> validInstruments) {
+        super(settings, validInstruments);
     }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         if (!world.isClient()) {

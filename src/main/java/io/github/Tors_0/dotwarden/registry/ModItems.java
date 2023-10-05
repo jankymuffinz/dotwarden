@@ -4,6 +4,7 @@ import io.github.Tors_0.dotwarden.DOTWarden;
 import io.github.Tors_0.dotwarden.item.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.tag.InstrumentTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -26,7 +27,7 @@ public interface ModItems {
     Item CAPTURED_SOUL = createItem("captured_soul", new SoulItem(new QuiltItemSettings().group(ItemGroup.MISC)));
     Item SCULK_CORE = createItem("sculk_core", new Item(new QuiltItemSettings().group(ItemGroup.MISC)));
     Item ECHO_CHAMBER = createItem("echo_chamber", new EchoChamberItem(new QuiltItemSettings().group(ItemGroup.TOOLS).maxCount(1)));
-    Item HARMONIC_STAFF = createItem("harmonic_staff", new HarmonicStaffItem(new QuiltItemSettings().group(ItemGroup.COMBAT)));
+    Item HARMONIC_STAFF = createItem("harmonic_staff", new HarmonicStaffItem(new QuiltItemSettings().group(ItemGroup.COMBAT), InstrumentTags.SCREAMING_GOAT_HORNS));
     Item BANSHEE_HORN = createItem("banshee_horn", new BansheeHornItem(new QuiltItemSettings().group(ItemGroup.COMBAT)));
 //  Item SCULK_BELL = createItem("sculk_bell", new Item(new QuiltItemSettings().group(ItemGroup.COMBAT)));
 //  Item TUNING_TRIDENT = createItem("tuning_trident", new Item(new QuiltItemSettings().group(ItemGroup.COMBAT)));
