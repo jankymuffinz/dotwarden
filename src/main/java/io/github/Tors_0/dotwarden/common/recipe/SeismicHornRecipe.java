@@ -12,12 +12,12 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-public class BansheeHornRecipe extends SpecialCraftingRecipe {
+public class SeismicHornRecipe extends SpecialCraftingRecipe {
     private static final Ingredient ECHO_CHAMBER = Ingredient.ofItems(ModItems.ECHO_CHAMBER);
     private static final Ingredient GOAT_HORN = Ingredient.ofItems(Items.GOAT_HORN);
     private static final Ingredient SCULK_SHRIEKER = Ingredient.ofItems(Items.SCULK_SHRIEKER);
 
-    public BansheeHornRecipe(Identifier id) {
+    public SeismicHornRecipe(Identifier id) {
         super(id);
     }
 
@@ -51,7 +51,7 @@ public class BansheeHornRecipe extends SpecialCraftingRecipe {
                     && ItemStack.fromNbt(echoStack.getOrCreateNbt().getList("Items", NbtElement.COMPOUND_TYPE).getCompound(0)).getCount() == 2
             ) {
                 if (inventory.getStack(i+3).isOf(Items.GOAT_HORN) && inventory.getStack(i+6).isOf(Items.SCULK_SHRIEKER)) {
-                    return new ItemStack(ModItems.BANSHEE_HORN);
+                    return new ItemStack(ModItems.SEISMIC_HORN);
                 }
             }
         }
@@ -60,7 +60,7 @@ public class BansheeHornRecipe extends SpecialCraftingRecipe {
 
     @Override
     public ItemStack getOutput() {
-        return new ItemStack(ModItems.BANSHEE_HORN);
+        return new ItemStack(ModItems.SEISMIC_HORN);
     }
 
     @Override
@@ -70,6 +70,6 @@ public class BansheeHornRecipe extends SpecialCraftingRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return DOTWarden.BANSHEE_HORN_RECIPE;
+        return DOTWarden.SEISMIC_HORN_RECIPE;
     }
 }

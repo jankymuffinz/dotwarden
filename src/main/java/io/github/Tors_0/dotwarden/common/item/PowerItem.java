@@ -57,6 +57,7 @@ public class PowerItem extends Item {
                 }
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(((PlayerExtensions)user).dotwarden$getPowerLevel());
+                buf.writeInt(((PlayerExtensions)user).dotwarden$getPower());
                 ServerPlayNetworking.send((ServerPlayerEntity)user, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
                 return TypedActionResult.success(user.getStackInHand(hand),true);
             } else {
@@ -68,6 +69,7 @@ public class PowerItem extends Item {
                 }
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(((PlayerExtensions)user).dotwarden$getPowerLevel());
+                buf.writeInt(((PlayerExtensions)user).dotwarden$getPower());
                 ServerPlayNetworking.send((ServerPlayerEntity)user, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
                 return TypedActionResult.pass(user.getStackInHand(hand));
             }
@@ -87,6 +89,7 @@ public class PowerItem extends Item {
         if (entity instanceof PlayerExtensions player) {
             if (!world.isClient()) {
                 stack.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", player.dotwarden$getPowerLevel());
+                stack.getOrCreateSubNbt(DOTWarden.ID).putInt("power", player.dotwarden$getPower());
             }
         }
     }
@@ -94,6 +97,8 @@ public class PowerItem extends Item {
     public ItemStack getDefaultStack() {
         ItemStack itm = new ItemStack(this);
         itm.getOrCreateSubNbt(DOTWarden.ID).putString("owner","Nobody");
+        itm.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", 0);
+        itm.getOrCreateSubNbt(DOTWarden.ID).putInt("power", 0);
         return itm;
     }
     @Override
@@ -127,8 +132,8 @@ public class PowerItem extends Item {
                 stack.getOrCreateSubNbt(DOTWarden.ID).getString("owner"): "Nobody")
                 .append(Text.translatable("item.dotwarden.power_of_the_disciple.tooltip2")));
 		tooltip.add(Text.literal("").append(tip1).append(": " + stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevels")).setStyle(style));
-		tooltip.add(Text.literal("").append(tip2).append(": " + (int)(stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power") /
-                (double)ptsUntilNextLevel(stack) * 100) + "%").setStyle(EMPTY.withColor(Formatting.GRAY)));
+		tooltip.add(Text.literal("").append(tip2).append(": " + stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power")  + " / " +
+                ptsUntilNextLevel(stack)).setStyle(EMPTY.withColor(Formatting.GRAY)));
 		super.appendTooltip(stack, world, tooltip, context);
 	}
 }

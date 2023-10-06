@@ -12,7 +12,7 @@
   "item.dotwarden.echo_chamber": "Echo Chamber",
   "death.attack.heartstab": "%1$s cut their own heart out",
   "item.dotwarden.harmonic_staff": "Harmonic Staff",
-  "death.attack.banshee_blast": "%1$s heard an offensively loud shriek",
-  "death.attack.banshee_blast.player": "%1$s heard an offensively loud shriek from %2$s",
-  "death.attack.banshee_blast.player.item": "%1$s heard an offensively loud shriek from %2$s using %3$s"
+  "death.attack.seismic_shout": "%1$s was obliterated by a seismic shout",
+  "death.attack.seismic_shout.player": "%1$s was obliterated by a seismic shout from %2$s",
+  "death.attack.seismic_shout.player.item": "%1$s was obliterated by a seismic shout from %2$s using %3$s"
 }

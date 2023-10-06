@@ -11,9 +11,11 @@ public class DOTWNetworking {
     public static void init() {
         ClientPlayNetworking.registerGlobalReceiver(POWERLEVEL_PACKET_ID, (client, handler, buf, responseSender) -> {
             int x = buf.readInt();
+            int y = buf.readInt();
             client.execute(() -> {
                 assert client.player != null;
                 ((PlayerExtensions)client.player).dotwarden$setPowerLevel(x);
+                ((PlayerExtensions)client.player).dotwarden$setPower(y);
             });
         });
         ClientPlayNetworking.registerGlobalReceiver(SYNC_SACRIFICE_ID, (client, handler, buf, responseSender) -> {

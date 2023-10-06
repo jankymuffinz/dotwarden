@@ -11,6 +11,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.warden.WardenEntity;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,6 +29,8 @@ import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.List;
 
+import static io.github.Tors_0.dotwarden.common.item.PowerItem.ptsUntilNextLevel;
+
 public class SculkedKnifeItem extends Item {
     public SculkedKnifeItem(Settings settings) {
         super(settings);
@@ -34,12 +39,38 @@ public class SculkedKnifeItem extends Item {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof PlayerEntity player) {
             if (((PlayerExtensions) player).dotwarden$getPowerLevel() > 0) {
-                target.damage(DamageSource.player(player),((PlayerExtensions) player).dotwarden$getPowerLevel() / 5f);
+                target.damage(DamageSource.player(player),Math.min(((PlayerExtensions) player).dotwarden$getPowerLevel() / 5f + 1, 15f));
             } else {
                 stack.damage(1, attacker, (e) -> {
                     e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
                 });
-                target.damage(DamageSource.player(player),1f);
+                target.damage(DamageSource.player(player),0f);
+            }
+            if (target.isDead()
+                    && !(target instanceof WardenEntity)
+                    && !target.isBaby()
+                    && player.getInventory().contains(new ItemStack(ModItems.POWER_OF_THE_DISCIPLE))
+            ) {
+                PlayerExtensions playerE = (PlayerExtensions) player;
+                if (target instanceof PlayerEntity) {
+                    playerE.dotwarden$addPower((int)(Math.random() * 20) + 40);
+                } else if (target instanceof HostileEntity) {
+                    playerE.dotwarden$addPower((int)(Math.random() * target.getMaxHealth()) + 20);
+                } else if (target instanceof PassiveEntity) {
+                    playerE.dotwarden$addPower((int)((Math.random() * target.getMaxHealth()) + 7.5));
+                }
+                // live update powerlevel counter if power has exceeded the requirement
+                while (playerE.dotwarden$getPower() >= ptsUntilNextLevel(stack)) {
+                    playerE.dotwarden$addPower( - ptsUntilNextLevel(stack));
+                    playerE.dotwarden$addPowerLevel(1);
+                    stack.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", playerE.dotwarden$getPowerLevel());
+                    stack.getOrCreateSubNbt(DOTWarden.ID).putInt("power", playerE.dotwarden$getPower());
+                }
+                // avoid client/server desync
+                PacketByteBuf buf = PacketByteBufs.create();
+                buf.writeInt(playerE.dotwarden$getPowerLevel());
+                buf.writeInt(playerE.dotwarden$getPower());
+                ServerPlayNetworking.send((ServerPlayerEntity)player, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
             }
             return true;
         }
@@ -76,13 +107,15 @@ public class SculkedKnifeItem extends Item {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerExtensions player) {
             if (!world.isClient()) {
-                stack.getOrCreateSubNbt(DOTWarden.ID).putInt("power", player.dotwarden$getPowerLevel());
+                stack.getOrCreateSubNbt(DOTWarden.ID).putInt("powerlevels", player.dotwarden$getPowerLevel());
+                stack.getOrCreateSubNbt(DOTWarden.ID).putInt("power", player.dotwarden$getPower());
             }
         }
     }
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.dotwarden.sculked_knife.tooltip").append("" + (stack.getOrCreateSubNbt(DOTWarden.ID).getInt("power") / 5.0F)));
+        tooltip.add(Text.translatable("item.dotwarden.sculked_knife.tooltip")
+                .append("" + Math.min((stack.getOrCreateSubNbt(DOTWarden.ID).getInt("powerlevels") / 5f + 1), 15f)));
         super.appendTooltip(stack, world, tooltip, context);
     }
 }

@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 public class EchoChamberItem extends BundleItem {
 
-    public static final int MAX_STORAGE = 4;
+    public static final int MAX_STORAGE = 64;
     public EchoChamberItem(Settings settings) {
         super(settings);
     }

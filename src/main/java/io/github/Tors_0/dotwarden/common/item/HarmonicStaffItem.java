@@ -9,8 +9,7 @@ import net.minecraft.entity.damage.EntityDamageSource;
 import net.minecraft.entity.mob.warden.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
-import net.minecraft.item.Instrument;
-import net.minecraft.item.InstrumentItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
@@ -18,7 +17,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -33,13 +31,13 @@ import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 import java.util.function.Predicate;
 
-public class HarmonicStaffItem extends InstrumentItem {
+public class HarmonicStaffItem extends Item {
     private static final Predicate<Entity> VALID_ENTITY = (entity -> (entity instanceof LivingEntity && !(entity instanceof WardenEntity)));
     private static final int POWER_LEVEL_COST = 3;
     private static final float BOOM_DAMAGE = 10.0F;
 
-    public HarmonicStaffItem(Settings settings, TagKey<Instrument> validInstruments) {
-        super(settings, validInstruments);
+    public HarmonicStaffItem(Settings settings) {
+        super(settings);
     }
 
     @Override
@@ -75,10 +73,11 @@ public class HarmonicStaffItem extends InstrumentItem {
             ) {
                 if (!player.isCreative()) {
                     player.getItemCooldownManager().set(this, 200);
-                    ((PlayerExtensions)player).dotwarden$setPowerLevel(((PlayerExtensions)player).dotwarden$getPowerLevel() - POWER_LEVEL_COST);
+                    ((PlayerExtensions)player).dotwarden$addPowerLevel( - POWER_LEVEL_COST);
                 }
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(((PlayerExtensions)player).dotwarden$getPowerLevel());
+                buf.writeInt(((PlayerExtensions)player).dotwarden$getPower());
                 ServerPlayNetworking.send((ServerPlayerEntity)player, DOTWNetworking.POWERLEVEL_PACKET_ID, buf);
                 Vec3d vec3d2 = livingEntity.getEyePos().subtract(startPoint);
                 Vec3d vec3d3 = vec3d2.normalize();

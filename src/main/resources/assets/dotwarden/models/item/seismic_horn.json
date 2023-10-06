@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "item/banshee_horn"
+    "layer0": "dotwarden:item/seismic_horn"
   },
   "display": {
     "thirdperson_righthand": {
@@ -30,7 +30,7 @@
       "predicate": {
         "tooting": 1
       },
-      "model": "item/tooting_banshee_horn"
+      "model": "dotwarden:item/tooting_seismic_horn"
     }
   ]
 }

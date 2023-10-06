@@ -1,7 +1,7 @@
 package io.github.Tors_0.dotwarden.common;
 
 import io.github.Tors_0.dotwarden.common.extensions.PlayerExtensions;
-import io.github.Tors_0.dotwarden.common.recipe.BansheeHornRecipe;
+import io.github.Tors_0.dotwarden.common.recipe.SeismicHornRecipe;
 import io.github.Tors_0.dotwarden.common.recipe.HarmonicStaffRecipe;
 import io.github.Tors_0.dotwarden.common.registry.ModItems;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
@@ -25,8 +25,8 @@ public class DOTWarden implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
     public static final SpecialRecipeSerializer<HarmonicStaffRecipe> HARMONIC_STAFF_RECIPE = RecipeSerializer.register(
             "dotwarden:harmonic_staff", new SpecialRecipeSerializer<>(HarmonicStaffRecipe::new));
-    public static final SpecialRecipeSerializer<BansheeHornRecipe> BANSHEE_HORN_RECIPE = RecipeSerializer.register(
-            "dotwarden:banshee_horn", new SpecialRecipeSerializer<>(BansheeHornRecipe::new));
+    public static final SpecialRecipeSerializer<SeismicHornRecipe> SEISMIC_HORN_RECIPE = RecipeSerializer.register(
+            "dotwarden:seismic_horn", new SpecialRecipeSerializer<>(SeismicHornRecipe::new));
     private static final Identifier WARDEN_LOOT_TABLE_ID = EntityType.WARDEN.getLootTableId();
 
 	@Override

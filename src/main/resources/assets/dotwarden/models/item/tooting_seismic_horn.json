@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "item/banshee_horn"
+    "layer0": "dotwarden:item/seismic_horn"
   },
   "display": {
     "thirdperson_righthand": {
